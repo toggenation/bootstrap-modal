@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class CreateUsers extends AbstractMigration
+class Articles extends AbstractMigration
 {
     /**
      * Change Method.
@@ -15,14 +15,14 @@ class CreateUsers extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('users');
+        $table = $this->table('articles');
 
-        $table->addColumn('name', 'string', [
+        $table->addColumn('title', 'string', [
             'default' => null,
             'limit' => 255,
             'null' => false,
         ]);
-        $table->addColumn('email', 'string', [
+        $table->addColumn('body', 'text', [
             'default' => null,
             'limit' => 255,
             'null' => false,
