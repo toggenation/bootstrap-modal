@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
+use Cake\Utility\Inflector;
 use Migrations\AbstractSeed;
 
 /**
  * Users seed.
  */
-class UsersSeed extends AbstractSeed
+class ArticlesSeed extends AbstractSeed
 {
     /**
      * Run Method.
@@ -21,18 +22,20 @@ class UsersSeed extends AbstractSeed
      */
     public function run()
     {
-
         $faker = Faker\Factory::create();
 
         for ($i = 0; $i < 100; $i++) {
-            $data[] = [
-                'name' => $faker->name(),
-                'email' => $faker->email()
-            ];
+            $title = Inflector::humanize($faker->words($faker->randomElement([2, 3, 4]), true));
+
+            $body = $faker->paragraphs($faker->randomElement([2, 3, 4, 5]), true);
+
+            $data[] = compact('title', 'body');
         }
 
+        $table = $this->table('articles');
 
-        $table = $this->table('users');
+        $table->truncate();
+
         $table->insert($data)->save();
     }
 }
