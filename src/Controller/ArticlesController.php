@@ -17,14 +17,8 @@ class ArticlesController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index($random = null)
+    public function index()
     {
-        if ($random) {
-            $this->Flash->success(
-                'Success for Bootstrap Modal confirmation dialog using $this->Html->link(..., ["confirm" => ...])'
-            );
-        }
-
         $articles = $this->paginate($this->Articles);
 
         $this->set(compact('articles'));
@@ -102,7 +96,7 @@ class ArticlesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $article = $this->Articles->get($id);
         if ($this->Articles->delete($article)) {
-            $this->Flash->success(__('The article titled "{0}" has been deleted.', $article->title));
+            $this->Flash->success(__('The article has been deleted.'));
         } else {
             $this->Flash->error(__('The article could not be deleted. Please, try again.'));
         }

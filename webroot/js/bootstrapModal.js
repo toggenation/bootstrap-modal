@@ -1,25 +1,19 @@
-const bootstrapModal = document.getElementById('bootstrapModal')
 
-bootstrapModal.addEventListener('show.bs.modal', event => {
-    const bootstrapModal = document.getElementById('bootstrapModal')
 
-    const link = event.relatedTarget;
+function addToModal(formName) {
+    const modal = document.getElementById('bootstrapModal');
 
-    bootstrapModal.dataset.href = link.href; //data-href
+    modal.dataset.formName = formName;
+}
 
-    const confirmMessage = document.getElementById('confirmMessage');
-
-    confirmMessage.textContent = link.dataset.confirmMessage // data-confirm-message
-})
 
 const ok = document.getElementById('ok');
 
 ok.addEventListener('click', function () {
     const modal = document.getElementById('bootstrapModal');
 
-    const formName = modal.dataset.formName;
-
-    const href = modal.dataset.href;
+    formName = modal.dataset.formName; // data-form-name => formName;
+    href = modal.dataset.href;
 
     if (formName) {
         document[formName].submit();
@@ -30,11 +24,28 @@ ok.addEventListener('click', function () {
     const bootstrapModal = bootstrap.Modal.getInstance(modal);
 
     bootstrapModal.hide();
-});
+})
 
+const bootstrapModal = document.getElementById('bootstrapModal')
 
-function addToModal(formName) {
-    const modal = document.getElementById('bootstrapModal');
+bootstrapModal.addEventListener('hide.bs.modal', event => {
+    const bootstrapModal = document.getElementById('bootstrapModal');
 
-    modal.dataset.formName = formName;
-}
+    delete bootstrapModal.dataset.href;
+
+    delete bootstrapModal.dataset.formName;
+})
+
+bootstrapModal.addEventListener('show.bs.modal', event => {
+    const bootstrapModal = document.getElementById('bootstrapModal')
+
+    const link = event.relatedTarget
+
+    const message = link.dataset.confirmMessage;
+
+    bootstrapModal.dataset.href = link.href;
+
+    const confirmMessage = document.getElementById('confirmMessage');
+
+    confirmMessage.textContent = message;
+})
